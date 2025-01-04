@@ -1,0 +1,39 @@
+.button {
+    color: #4A4A4A;
+    border: none;
+    width: 168px;
+height: 50px;
+background-color: white;
+border: 1px solid #DFE5EC;
+font-size: 12px;
+font-family: Open Sans SemiBold;
+}
+
+.button:active {
+background-color: #2196f3;
+color: white;
+}
+
+.button:hover {
+    border: 2px solid #2196F3;
+}
+
+.button:focus {
+    background-color: #2196F3;
+    color: white;
+}
+
+.container {
+    display: flex;
+    gap: 0;
+}
+
+.button:first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.button:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
