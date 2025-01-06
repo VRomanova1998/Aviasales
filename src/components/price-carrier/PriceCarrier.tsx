@@ -1,4 +1,4 @@
-import myImage from '../files/S7.png';
+import myImage from '../../files/S7.png';
 
 import styles from './price-carrier.module.scss';
 

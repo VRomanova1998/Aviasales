@@ -12,7 +12,7 @@ export const TicketsContainer = () => {
       <Ticket />
       <Ticket />
       <Ticket />
-      <Ticket />
+      <button className={styles.button}>ПОКАЗАТЬ ЕЩЕ 5 БИЛЕТОВ</button>
     </div>
   );
 };
