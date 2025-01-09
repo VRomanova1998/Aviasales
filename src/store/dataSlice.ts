@@ -1,4 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+
+import { fetchSearchID } from '../helper';
 
 type initialDataState = {
   data: { searchId?: string };
@@ -12,18 +14,7 @@ const initialState: initialDataState = {
   error: false,
 };
 
-export const fetchSearchID = createAsyncThunk('data/searchID', async function () {
-  try {
-    const response = await fetch('https://aviasales-test-api.kata.academy/search');
-    if (!response.ok) {
-      throw new Error('Ошибка со стороны сервера');
-    }
-    const results = await response.json();
-    return results;
-  } catch (error) {
-    return Promise.reject(error);
-  }
-});
+fetchSearchID();
 
 const searchID = createSlice({
   name: 'data',

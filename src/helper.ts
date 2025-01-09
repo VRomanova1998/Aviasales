@@ -1,4 +1,34 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
+
 import { TicketType } from './types/types';
+import store from './store';
+
+export const fetchSearchID = createAsyncThunk('data/searchID', async function () {
+  try {
+    const response = await fetch('https://aviasales-test-api.kata.academy/search');
+    if (!response.ok) {
+      throw new Error('Ошибка со стороны сервера');
+    }
+    const results = await response.json();
+    return results;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+});
+
+export const fetchTickets = createAsyncThunk('dataTickets/tickets', async () => {
+  try {
+    const id = store.getState().searchID.data.searchId;
+    const response = await fetch(`https://aviasales-test-api.kata.academy/tickets?searchId=${id}`);
+    if (!response.ok) {
+      throw new Error('Ошибка со стороны сервера');
+    }
+    const results = await response.json();
+    return results.tickets;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+});
 
 export const getAmountTransition = (amount: number) => {
   switch (amount) {
@@ -13,15 +43,6 @@ export const getAmountTransition = (amount: number) => {
     default:
       return `${amount} ПЕРЕСАДОК`;
   }
-};
-
-export const getSearchId = async () => {
-  const response = await fetch('https://aviasales-test-api.kata.academy/search');
-  if (!response.ok) {
-    throw new Error('Ошибка со стороны сервера');
-  }
-  const results = await response.json();
-  return results;
 };
 
 export const getSortingTickets = (tickets: TicketType[], activeButton: string) => {

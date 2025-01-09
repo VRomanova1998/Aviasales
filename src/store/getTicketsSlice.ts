@@ -1,8 +1,7 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 import { TicketType } from '../types/types';
-
-import store from '.';
+import { fetchTickets } from '../helper';
 
 type initialStateType = {
   tickets: TicketType[];
@@ -11,23 +10,11 @@ type initialStateType = {
 };
 const initialState: initialStateType = {
   tickets: [],
-  loading: true,
+  loading: false,
   error: false,
 };
 
-export const fetchTickets = createAsyncThunk('dataTickets/tickets', async () => {
-  try {
-    const id = store.getState().searchID.data.searchId;
-    const response = await fetch(`https://aviasales-test-api.kata.academy/tickets?searchId=${id}`);
-    if (!response.ok) {
-      throw new Error('Ошибка со стороны сервера');
-    }
-    const results = await response.json();
-    return results.tickets;
-  } catch (error) {
-    return Promise.reject(error);
-  }
-});
+fetchTickets();
 
 const dataTickets = createSlice({
   name: 'dataTickets',
