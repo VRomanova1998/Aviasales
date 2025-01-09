@@ -3,13 +3,11 @@ import { createSlice } from '@reduxjs/toolkit';
 const sortingSlice = createSlice({
   name: 'sorting',
   initialState: {
-    sorting: null,
+    sorting: '',
   },
   reducers: {
     toggleSorting(state, action) {
-      // console.log(state);
-      // console.log(action);
-      state.sorting = action.payload.sortingButtonName;
+      state.sorting = action.payload.changeSort;
     },
   },
 });

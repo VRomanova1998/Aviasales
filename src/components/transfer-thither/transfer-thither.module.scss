@@ -1,18 +1,22 @@
 .line {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .first {
-    color: #A0B0B9;
-    font-family: Open Sans SemiBold;
-    min-width: 81px;
+  color: #a0b0b9;
+  font-family: Open Sans SemiBold;
+  min-width: 81px;
+}
+
+.first:last-child, .second:last-child {
+  width: 96px;
 }
 
 .second {
-    font-size: 14px;
-    color: #4A4A4A;
-    font-family: Open Sans SemiBold;
-    min-width: 81px;
-    margin-bottom: 10px;
+  font-size: 14px;
+  color: #4a4a4a;
+  font-family: Open Sans SemiBold;
+  width: 81px;
+  margin-bottom: 10px;
 }

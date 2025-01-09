@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 
 import { toggleSorting } from '../../store/sortingSlice';
+import { useAppSelector } from '../../hooks';
 
 import styles from './filter.module.scss';
 
@@ -10,17 +11,18 @@ export const Filter = () => {
     const changeSort = e.currentTarget.textContent;
     dispatch(toggleSorting({ changeSort }));
   };
-  return (
-    <div className={styles.container}>
-      <button className={styles.button} onClick={(e) => changeSorting(e)}>
-        САМЫЙ ДЕШЕВЫЙ
+  const activeFilter = useAppSelector((state) => state.sorting.sorting);
+  const sortingButtonValue = ['САМЫЙ ДЕШЕВЫЙ', 'САМЫЙ БЫСТРЫЙ', 'ОПТИМАЛЬНЫЙ'];
+  const sortingButtonFragment = sortingButtonValue.map((item, index) => {
+    return (
+      <button
+        className={activeFilter === item ? [styles.button, styles.active].join(' ') : styles.button}
+        onClick={(e) => changeSorting(e)}
+        key={index}
+      >
+        {item}
       </button>
-      <button className={styles.button} onClick={(e) => changeSorting(e)}>
-        САМЫЙ БЫСТРЫЙ
-      </button>
-      <button className={styles.button} onClick={(e) => changeSorting(e)}>
-        ОПТИМАЛЬНЫЙ
-      </button>
-    </div>
-  );
+    );
+  });
+  return <div className={styles.container}>{sortingButtonFragment}</div>;
 };

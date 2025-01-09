@@ -1,4 +1,3 @@
-import { Checkbox } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
@@ -56,17 +55,16 @@ export const TransferAmountFilter = () => {
           type="checkbox"
           checked={item.checked}
           onChange={() => onChange(item.name)}
+          className={styles.checkbox}
         />
         <label>{item.name}</label>
       </span>
     );
   });
   return (
-    <div className={styles.container}>
+    <div className={[styles.container, styles.checkboxContainer].join(' ')}>
       <span className={styles.title}>КОЛИЧЕСТВО ПЕРЕСАДОК</span>
-      <Checkbox.Group style={{ width: '100%' }} className={styles.checkboxContainer}>
-        {checkBoxFragment}
-      </Checkbox.Group>
+      {checkBoxFragment}
     </div>
   );
 };
