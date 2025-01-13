@@ -45,42 +45,37 @@ export const TicketsContainer = () => {
     setAmountTicketsRender(5);
   }, [activeSortingButton, activeFilterButton]);
 
-  let fragment;
-  let button;
-  if (tickets) {
-    const arrayAllActiveFilter: string[] = [];
-    activeFilterButton.map((item) => {
-      if (item.checked === true) {
-        arrayAllActiveFilter.push(item.name.toUpperCase());
-      }
-    });
-    const arrForSort = [...tickets];
-    let sortingResult: TicketType[] = useMemo(
-      () => getSortingTickets(arrForSort, activeSortingButton),
-      [arrForSort, activeSortingButton]
+  const arrayAllActiveFilter: string[] = [];
+  activeFilterButton.map((item) => {
+    if (item.checked === true) {
+      arrayAllActiveFilter.push(item.name.toUpperCase());
+    }
+  });
+  const arrForSort = [...tickets];
+  let sortingResult: TicketType[] = useMemo(
+    () => getSortingTickets(arrForSort, activeSortingButton),
+    [arrForSort, activeSortingButton]
+  );
+  sortingResult = useMemo(
+    () => getFilterTickets(sortingResult, arrayAllActiveFilter),
+    [sortingResult, arrayAllActiveFilter]
+  );
+  const fragment =
+    sortingResult.length === 0 && !isLoadingSearchId && !isLoadingTickets ? (
+      <Alert message="Рейсов, подходящих под заданные фильтры, не найдено" type="info" />
+    ) : (
+      sortingResult
+        .filter((item, index) => index < amountTicketsRender)
+        .map((item) => {
+          return <Ticket {...item} key={`${item.carrier}/${item.price}/${item.segments[0].date}`} />;
+        })
     );
-    sortingResult = useMemo(
-      () => getFilterTickets(sortingResult, arrayAllActiveFilter),
-      [sortingResult, arrayAllActiveFilter]
+  const button =
+    sortingResult.length === 0 ? null : (
+      <button className={styles.button} onClick={changeAmountTicketsRender}>
+        ПОКАЗАТЬ ЕЩЕ 5 БИЛЕТОВ
+      </button>
     );
-    fragment =
-      sortingResult.length === 0 && !isLoadingSearchId && !isLoadingTickets ? (
-        <Alert message="Рейсов, подходящих под заданные фильтры, не найдено" type="info" />
-      ) : (
-        sortingResult
-          .filter((item, index) => index < amountTicketsRender)
-          .map((item) => {
-            return <Ticket {...item} key={`${item.carrier}/${item.price}/${item.segments[0].date}`} />;
-          })
-      );
-    button =
-      sortingResult.length === 0 ? null : (
-        <button className={styles.button} onClick={changeAmountTicketsRender}>
-          ПОКАЗАТЬ ЕЩЕ 5 БИЛЕТОВ
-        </button>
-      );
-  }
-
   return (
     <div className={styles.container}>
       <Filter />
