@@ -62,7 +62,7 @@ export const TransferAmountFilter = () => {
     );
   });
   return (
-    <div className={[styles.container, styles.checkboxContainer].join(' ')}>
+    <div className={styles.container}>
       <span className={styles.title}>КОЛИЧЕСТВО ПЕРЕСАДОК</span>
       {checkBoxFragment}
     </div>

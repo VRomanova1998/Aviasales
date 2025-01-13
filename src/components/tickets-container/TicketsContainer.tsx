@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Alert, Spin } from 'antd';
 
 import { Filter } from '../filter/Filter';
@@ -55,8 +55,14 @@ export const TicketsContainer = () => {
       }
     });
     const arrForSort = [...tickets];
-    let sortingResult: TicketType[] = getSortingTickets(arrForSort, activeSortingButton);
-    sortingResult = getFilterTickets(sortingResult, arrayAllActiveFilter);
+    let sortingResult: TicketType[] = useMemo(
+      () => getSortingTickets(arrForSort, activeSortingButton),
+      [arrForSort, activeSortingButton]
+    );
+    sortingResult = useMemo(
+      () => getFilterTickets(sortingResult, arrayAllActiveFilter),
+      [sortingResult, arrayAllActiveFilter]
+    );
     fragment =
       sortingResult.length === 0 && !isLoadingSearchId && !isLoadingTickets ? (
         <Alert message="Рейсов, подходящих под заданные фильтры, не найдено" type="info" />
